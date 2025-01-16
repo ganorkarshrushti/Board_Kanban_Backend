@@ -4,22 +4,17 @@ const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require('dotenv').config()
 
 const app = express();
 const port = 5000;
 
 // Middleware
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors());
 app.use(bodyParser.json());
 
 // MySQL Connection
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root", 
-    password: "", 
-    database: "kanban_db", 
-});
-
+const db = mysql.createConnection(process.env.DBPURL);
 db.connect((err) => {
     if (err) {
         console.error("Error connecting to the database:", err);
